@@ -1,4 +1,4 @@
-# Lexa Store — Oyun Mağazası ve OTP (Guard) Kod Yönetim Sistemi
+# Guard Management — Oyun Mağazası ve OTP (Guard) Kod Yönetim Sistemi
 
 Paylaşımlı oyun ve servis hesabı satan mağazalar için uçtan uca bir platform: müşteri, pazaryerinden (İtemSatış vb.) aldığı **1–5 oyunluk seçim anahtarını** sitede doğrular, katalogdan oyunlarını seçer, hesap bilgilerine kütüphanesinden ulaşır ve platformun giriş sırasında istediği **doğrulama kodunu (Steam Guard, EA, Epic, Ubisoft, Rockstar, Microsoft, ChatGPT…) tek tıkla, canlı olarak** alır.
 
@@ -19,7 +19,7 @@ Paylaşımlı oyun ve servis hesabı satan mağazalar için uçtan uca bir platf
 
 ## Ne yapar?
 
-Hesap satan bir mağazanın en çok zaman kaybettiği iş, müşteriye **giriş kodunu yetiştirmektir**: müşteri hesaba girer, platform e-postaya kod yollar, müşteri satıcıya yazar, satıcı kodu bulup iletir. Lexa Store bu döngüyü otomatikleştirir:
+Hesap satan bir mağazanın en çok zaman kaybettiği iş, müşteriye **giriş kodunu yetiştirmektir**: müşteri hesaba girer, platform e-postaya kod yollar, müşteri satıcıya yazar, satıcı kodu bulup iletir. Guard Management bu döngüyü otomatikleştirir:
 
 1. Müşteri pazaryerinden bir **seçim anahtarı** satın alır: 1, 2, 3, 4 ya da 5 oyunluk. Sen ona anahtarı teslim edersin.
 2. Müşteri anahtarı sitede doğrular ve anahtar kaç oyunluksa katalogdan **o kadar oyun seçer**. Seçtiği oyunlar hesabında kalır; haklarının hepsini aynı anda kullanmak zorunda değildir.
@@ -85,7 +85,7 @@ Stok bu modelden hesaplanır: **boş slot − henüz doğrulanmamış ürün ana
 Müşterinin “Kod al”a basmasından kodun ekranda belirmesine kadar olan her şey. Görseldeki numaralar aşağıdaki adımlarla eşleşir.
 
 - **1–4 · Hesap bilgileri.** Müşteri kütüphanesinde “Göster”e basar. API erişimin etkin olduğunu doğrular, şifreli bilgileri çözer ve görüntülemeyi denetim kaydına yazar.
-- **5–7 · Platform kodu ister.** Müşteri oyuna giriş yapar; platform doğrulama kodunu hesabın e-postasına gönderir. Bu kısım Lexa Store'un dışında olur.
+- **5–7 · Platform kodu ister.** Müşteri oyuna giriş yapar; platform doğrulama kodunu hesabın e-postasına gönderir. Bu kısım Guard Management'ın dışında olur.
 - **8–13 · İstek açılır.** “Kod al” ile API üç şeyi denetler: erişim etkin mi, bekleme süresi doldu mu (varsayılan 30 sn), günlük sınır aşıldı mı (varsayılan 15). Geçerse isteği `pending` olarak kaydeder ve Guard motoruna devreder.
 - **14–16 · Yoklama döngüsü.** Motor kod kaynağını 2,5 saniyede bir yoklar. E-posta kaynağında göndereni platformun bilinen alan adlarıyla doğrular, koda benzeyen adayları bağlamına göre puanlar ve kodu ayrıştırır.
 - **17–20 · Teslim.** Kod şifrelenerek kaydedilir, e-posta bu isteğe **sahiplendirilir** (aynı e-posta ikinci bir müşteriye verilemez) ve kod SSE ile müşterinin ekranına itilir. Haneler belirir, geri sayım başlar.
